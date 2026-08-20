@@ -1,0 +1,52 @@
+/* ==========================================================================
+   ANIMATIONS
+   Kept minimal and purposeful: entrance fades, skeleton shimmer, typing
+   dots, and a gentle floating icon effect on the hero. All respect
+   prefers-reduced-motion.
+   ========================================================================== */
+
+@keyframes skeletonShimmer {
+  0% { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
+}
+
+@keyframes typingBounce {
+  0%, 60%, 100% { transform: translateY(0); opacity: .5; }
+  30% { transform: translateY(-5px); opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes floatIcon {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes chatSlideIn {
+  from { opacity: 0; transform: translateY(8px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.animate-fade-up {
+  animation: fadeInUp var(--transition-slow) both;
+}
+
+.hero-icon-wrap i {
+  animation: floatIcon 4.5s ease-in-out infinite;
+}
+
+.chat-bubble-row {
+  animation: chatSlideIn var(--transition-base) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

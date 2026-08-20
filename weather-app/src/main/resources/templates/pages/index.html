@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head(${pageTitle})}"></head>
+<body>
+
+<div th:replace="~{fragments/navbar :: navbar(${activePage})}"></div>
+
+<main class="page-main">
+    <div class="container-xl">
+
+        <!-- ============================================================
+             SEARCH PANEL
+             Always visible at the top on every breakpoint per spec.
+             ============================================================ -->
+		<section class="mb-4 animate-fade-up" style="position: relative; z-index: 1060;">
+            <div class="glass-card search-panel">
+                <div class="row g-2 align-items-center">
+                    <div class="col-12 col-md">
+                        <form id="citySearchForm" class="search-input-group" autocomplete="off">
+                            <i class="bi bi-search search-icon"></i>
+                            <input type="text" id="citySearchInput" class="form-control"
+                                   placeholder="Search city or country..." aria-label="Search city or country" required>
+                            <button type="submit" class="btn btn-search">
+                                <i class="bi bi-search"></i><span>Search</span>
+                            </button>
+                            <div id="searchSuggestions" class="search-suggestions"></div>
+                        </form>
+                    </div>
+                    <div class="col-auto">
+                        <button type="button" id="locateMeBtn" class="btn-locate" title="Use my location" aria-label="Use my current location">
+                            <i class="bi bi-crosshair"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             LOADING SKELETON
+             ============================================================ -->
+        <div id="dashboardLoading" class="d-none">
+            <div class="row g-4">
+                <div class="col-12 col-lg-8">
+                    <div class="skeleton" style="height:260px;"></div>
+                </div>
+                <div class="col-12 col-lg-4">
+                    <div class="skeleton" style="height:260px;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================
+             EMPTY STATE (not yet used on initial load, reserved for
+             future "no results" scenarios beyond the error box below)
+             ============================================================ -->
+        <div id="dashboardEmpty" class="d-none">
+            <div th:replace="~{fragments/empty-state :: emptyState('bi-cloud-slash', 'No weather data yet', 'Search for a city above to see current conditions and forecasts.')}"></div>
+        </div>
+
+        <!-- ============================================================
+             ERROR STATE
+             ============================================================ -->
+        <div id="dashboardError" class="d-none mb-4">
+            <div class="alert-weather-error">
+                <i class="bi bi-exclamation-triangle-fill fs-5"></i>
+                <span id="dashboardErrorText">Something went wrong.</span>
+            </div>
+        </div>
+
+        <!-- ============================================================
+             MAIN DASHBOARD CONTENT
+             Desktop: two columns (main weather+forecast / AI+insights)
+             Tablet : stacked
+             Mobile : single column, current weather -> forecast -> AI
+             ============================================================ -->
+        <div id="dashboardContent" class="dashboard-grid d-none">
+
+            <!-- ---------------- MAIN COLUMN ---------------- -->
+            <div class="dashboard-main-col">
+
+                <!-- Hero: current conditions -->
+                <div id="heroCard" class="hero-weather-card animate-fade-up" data-condition="clear">
+                    <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
+                        <div>
+                            <p id="heroLocation" class="hero-location mb-1"><i class="bi bi-geo-alt-fill"></i>&nbsp;--</p>
+                            <p id="heroUpdated" class="hero-updated mb-0">Updated --</p>
+                        </div>
+                        <button id="addFavoriteBtn" class="btn btn-sm btn-light rounded-pill fw-semibold d-none" type="button">
+                            <i class="bi bi-star me-1"></i>Add to Favorites
+                        </button>
+                    </div>
+
+                    <div class="row align-items-center mt-3 mt-md-4">
+                        <div class="col-7 col-sm-8">
+                            <div id="heroTemp" class="hero-temp">--°</div>
+                            <div id="heroCondition" class="hero-condition mt-1">--</div>
+                            <div id="heroFeelsLike" class="hero-feelslike mt-1">Feels like --°</div>
+                        </div>
+                        <div class="col-5 col-sm-4 text-end">
+                            <div class="hero-icon-wrap ms-auto"><i id="heroIcon" class="bi bi-cloud-sun-fill"></i></div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-2 mt-3 mt-md-4 flex-wrap">
+                        <span class="hero-minmax"><i class="bi bi-arrow-up"></i> High <strong id="heroMax">--°</strong></span>
+                        <span class="hero-minmax"><i class="bi bi-arrow-down"></i> Low <strong id="heroMin">--°</strong></span>
+                    </div>
+                </div>
+
+                <!-- Stat tiles: humidity, wind, pressure, visibility, UV, sunrise/sunset -->
+                <div class="row g-3">
+                    <div class="col-6 col-md-4">
+                        <div class="stat-tile solid-card">
+                            <div class="stat-tile-icon"><i class="bi bi-droplet-half"></i></div>
+                            <div>
+                                <div class="stat-tile-label">Humidity</div>
+                                <div id="statHumidity" class="stat-tile-value">--%</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <div class="stat-tile solid-card">
+                            <div class="stat-tile-icon"><i class="bi bi-wind"></i></div>
+                            <div>
+                                <div class="stat-tile-label">Wind</div>
+                                <div id="statWind" class="stat-tile-value">--</div>
+                                <div id="statWindSub" class="stat-tile-sub">--</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <div class="stat-tile solid-card">
+                            <div class="stat-tile-icon"><i class="bi bi-speedometer2"></i></div>
+                            <div>
+                                <div class="stat-tile-label">Pressure</div>
+                                <div id="statPressure" class="stat-tile-value">--</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <div class="stat-tile solid-card">
+                            <div class="stat-tile-icon"><i class="bi bi-eye"></i></div>
+                            <div>
+                                <div class="stat-tile-label">Visibility</div>
+                                <div id="statVisibility" class="stat-tile-value">--</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <div class="stat-tile solid-card">
+                            <div class="stat-tile-icon"><i class="bi bi-brightness-high"></i></div>
+                            <div>
+                                <div class="stat-tile-label">UV Index</div>
+                                <div id="statUv" class="stat-tile-value">--</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <div class="stat-tile solid-card">
+                            <div class="stat-tile-icon"><i class="bi bi-sunrise"></i></div>
+                            <div>
+                                <div class="stat-tile-label">Sunrise / Sunset</div>
+                                <div class="stat-tile-value" style="font-size:1rem;">
+                                    <span id="statSunrise">--</span> / <span id="statSunset">--</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hourly forecast -->
+                <div>
+                    <div class="section-heading">
+                        <h5><i class="bi bi-clock me-2"></i>Hourly Forecast</h5>
+                    </div>
+                    <div id="hourlyStrip" class="scroll-strip">
+                        <!-- populated by weather.js -->
+                    </div>
+                </div>
+
+                <!-- 7-day forecast -->
+                <div>
+                    <div class="section-heading">
+                        <h5><i class="bi bi-calendar-week me-2"></i>7-Day Forecast</h5>
+                    </div>
+                    <div class="solid-card p-2 p-md-3">
+                        <div id="dailyList"><!-- populated by weather.js --></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ---------------- SIDE COLUMN ---------------- -->
+            <div class="dashboard-side-col">
+
+                <!-- AI Weather Assistant -->
+                <div th:replace="~{fragments/ai-chat :: aiChat}"></div>
+
+                <!-- Weather insights -->
+                <div>
+                    <div class="section-heading">
+                        <h5><i class="bi bi-lightbulb me-2"></i>Insights</h5>
+                    </div>
+                    <div class="d-flex flex-column gap-3">
+                        <div class="insight-card solid-card">
+                            <div class="insight-icon"><i class="bi bi-umbrella"></i></div>
+                            <div>
+                                <p class="insight-title mb-0">Rain check</p>
+                                <p class="insight-text">Ask the AI assistant whether you'll need an umbrella today.</p>
+                            </div>
+                        </div>
+                        <div class="insight-card solid-card">
+                            <div class="insight-icon"><i class="bi bi-bicycle"></i></div>
+                            <div>
+                                <p class="insight-title mb-0">Outdoor plans</p>
+                                <p class="insight-text">Check UV index and wind before heading out for a run or ride.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<div th:replace="~{fragments/scripts :: scripts}"></div>
+<script th:src="@{/js/weather.js}"></script>
+<script th:src="@{/js/ai-assistant.js}"></script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head(${pageTitle})}"></head>
+<body>
+
+<div th:replace="~{fragments/navbar :: navbar(${activePage})}"></div>
+
+<main class="page-main">
+    <div class="container-xl">
+        <div class="section-heading animate-fade-up">
+            <div>
+                <span class="section-eyebrow">Recent activity</span>
+                <h2><i class="bi bi-clock-history me-2"></i>Search History</h2>
+            </div>
+            <button id="clearHistoryBtn" type="button" class="btn btn-outline-danger rounded-pill btn-sm fw-semibold">
+                <i class="bi bi-trash3 me-1"></i>Clear History
+            </button>
+        </div>
+
+        <div id="historyLoading" class="row g-3 d-none">
+            <div class="col-12 col-md-6"><div class="skeleton" style="height:90px;"></div></div>
+            <div class="col-12 col-md-6"><div class="skeleton" style="height:90px;"></div></div>
+        </div>
+
+        <div id="historyError" class="alert-weather-error d-none mb-3"></div>
+
+        <div id="historyEmpty" class="d-none">
+            <div th:replace="~{fragments/empty-state :: emptyState('bi-clock-history', 'No search history yet', 'Cities you search for on the dashboard will show up here.')}"></div>
+        </div>
+
+        <div id="historyList" class="row g-3 animate-fade-up"></div>
+    </div>
+</main>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<div th:replace="~{fragments/scripts :: scripts}"></div>
+<script th:src="@{/js/history.js}"></script>
+</body>
+</html>

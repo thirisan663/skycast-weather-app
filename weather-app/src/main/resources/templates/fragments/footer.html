@@ -1,0 +1,33 @@
+<!-- ============================================================
+     FOOTER FRAGMENT
+     ============================================================ -->
+<footer th:fragment="footer" class="app-footer">
+    <div class="container-xl">
+        <div class="row gy-4 align-items-center">
+            <div class="col-12 col-md-6">
+                <div class="app-brand app-brand-footer">
+                    <span class="app-brand-icon"><i class="bi bi-cloud-sun-fill"></i></span>
+                    <span class="app-brand-text">SkyCast</span>
+                </div>
+                <p class="footer-tagline">Real-time weather, forecasts, and an AI assistant that actually understands the sky.</p>
+            </div>
+            <div class="col-6 col-md-3">
+                <h6 class="footer-heading">Explore</h6>
+                <ul class="footer-links">
+                    <li><a th:href="@{/}">Dashboard</a></li>
+                    <li><a th:href="@{/forecast}">7-Day Forecast</a></li>
+                    <li><a th:href="@{/favorites}">Favorites</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-md-3">
+                <h6 class="footer-heading">Assistant</h6>
+                <ul class="footer-links">
+                    <li><a th:href="@{/assistant}">Ask SkyCast AI</a></li>
+                    <li><a th:href="@{/history}">Search History</a></li>
+                </ul>
+            </div>
+        </div>
+        <hr class="footer-divider">
+        <p class="footer-copyright">© <span id="footerYear"></span> SkyCast Weather. Data updates in real time.</p>
+    </div>
+</footer>

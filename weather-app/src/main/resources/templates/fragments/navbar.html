@@ -1,0 +1,60 @@
+<!-- ============================================================
+     NAVBAR FRAGMENT
+     Bootstrap 5 responsive navbar: collapses to a hamburger menu
+     below the lg breakpoint. "activePage" (passed from each
+     controller) drives the .active class + aria-current.
+     ============================================================ -->
+<nav th:fragment="navbar(activePage)" class="navbar navbar-expand-lg app-navbar sticky-top">
+    <div class="container-fluid container-xl">
+        <a class="navbar-brand app-brand" th:href="@{/}">
+            <span class="app-brand-icon"><i class="bi bi-cloud-sun-fill"></i></span>
+            <span class="app-brand-text">SkyCast</span>
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#appNavContent" aria-controls="appNavContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="appNavContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center gap-lg-1">
+                <li class="nav-item">
+                    <a class="nav-link" th:classappend="${activePage == 'home'} ? 'active'"
+                       th:aria-current="${activePage == 'home'} ? 'page'" th:href="@{/}">
+                        <i class="bi bi-house-door me-1"></i>Home
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:classappend="${activePage == 'forecast'} ? 'active'"
+                       th:aria-current="${activePage == 'forecast'} ? 'page'" th:href="@{/forecast}">
+                        <i class="bi bi-calendar3 me-1"></i>Forecast
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:classappend="${activePage == 'favorites'} ? 'active'"
+                       th:aria-current="${activePage == 'favorites'} ? 'page'" th:href="@{/favorites}">
+                        <i class="bi bi-star me-1"></i>Favorites
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:classappend="${activePage == 'history'} ? 'active'"
+                       th:aria-current="${activePage == 'history'} ? 'page'" th:href="@{/history}">
+                        <i class="bi bi-clock-history me-1"></i>History
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:classappend="${activePage == 'assistant'} ? 'active'"
+                       th:aria-current="${activePage == 'assistant'} ? 'page'" th:href="@{/assistant}">
+                        <i class="bi bi-stars me-1"></i>AI Assistant
+                    </a>
+                </li>
+                <li class="nav-item ms-lg-2">
+                    <button class="btn btn-theme-toggle" id="themeToggleBtn" type="button" aria-label="Toggle dark mode">
+                        <i class="bi bi-moon-stars-fill"></i>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

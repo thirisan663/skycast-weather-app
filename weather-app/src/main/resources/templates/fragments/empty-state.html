@@ -1,0 +1,12 @@
+<!-- ============================================================
+     EMPTY STATE FRAGMENT
+     Reusable "nothing here yet" panel. Parameters:
+     icon  - a Bootstrap Icons class, e.g. 'bi-cloud-slash'
+     title - short heading
+     text  - supporting sentence
+     ============================================================ -->
+<div th:fragment="emptyState(icon, title, text)" class="empty-state">
+    <div class="empty-state-icon"><i th:class="'bi ' + ${icon}"></i></div>
+    <h3 class="empty-state-title" th:text="${title}">Nothing here yet</h3>
+    <p class="empty-state-text" th:text="${text}">Try searching for a city.</p>
+</div>

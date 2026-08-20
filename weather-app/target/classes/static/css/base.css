@@ -1,0 +1,53 @@
+/* ==========================================================================
+   BASE / RESET
+   Global element defaults layered on top of Bootstrap's reboot.
+   ========================================================================== */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg-app);
+  color: var(--text-primary);
+  transition: background-color var(--transition-base), color var(--transition-base);
+  overflow-x: hidden; /* guarantees no horizontal scroll app-wide */
+}
+
+h1, h2, h3, h4, h5, h6,
+.display-font {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+}
+
+a {
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+::selection {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+/* Custom scrollbar for horizontally-scrollable strips (hourly/daily on mobile) */
+.scroll-strip::-webkit-scrollbar {
+  height: 6px;
+}
+.scroll-strip::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: var(--radius-pill);
+}
+
+/* Focus states - accessible, visible, on-brand */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+.card:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.text-muted-custom { color: var(--text-muted) !important; }
+.text-secondary-custom { color: var(--text-secondary) !important; }

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head(${pageTitle})}"></head>
+<body>
+
+<div th:replace="~{fragments/navbar :: navbar(${activePage})}"></div>
+
+<main class="page-main">
+    <div class="container-xl">
+        <div class="section-heading animate-fade-up">
+            <div>
+                <span class="section-eyebrow">Your places</span>
+                <h2><i class="bi bi-star-fill me-2"></i>Favorite Cities</h2>
+            </div>
+        </div>
+
+        <div id="favoritesLoading" class="row g-3 d-none">
+            <div class="col-12 col-md-6 col-xl-4"><div class="skeleton" style="height:110px;"></div></div>
+            <div class="col-12 col-md-6 col-xl-4"><div class="skeleton" style="height:110px;"></div></div>
+            <div class="col-12 col-md-6 col-xl-4"><div class="skeleton" style="height:110px;"></div></div>
+        </div>
+
+        <div id="favoritesError" class="alert-weather-error d-none mb-3"></div>
+
+        <div id="favoritesEmpty" class="d-none">
+            <div th:replace="~{fragments/empty-state :: emptyState('bi-star', 'No favorites yet', 'Search for a city on the dashboard and tap the Add to Favorites button to pin it here.')}"></div>
+        </div>
+
+        <div id="favoritesList" class="row g-3 animate-fade-up"></div>
+    </div>
+</main>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<div th:replace="~{fragments/scripts :: scripts}"></div>
+<script th:src="@{/js/favorites.js}"></script>
+</body>
+</html>

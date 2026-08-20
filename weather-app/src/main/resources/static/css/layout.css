@@ -1,0 +1,190 @@
+/* ==========================================================================
+   LAYOUT
+   Navbar, footer, page shell, and the dashboard grid that reorders across
+   mobile -> tablet -> desktop per the spec:
+     Desktop : main weather/forecast column (left) + AI/insights column (right)
+     Tablet  : stacked, sensible order
+     Mobile  : single column, search -> current -> forecast -> AI assistant
+   ========================================================================== */
+
+/* ---------- Navbar ---------- */
+.app-navbar {
+  background: var(--bg-glass);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  border-bottom: 1px solid var(--border-subtle);
+  padding-top: .65rem;
+  padding-bottom: .65rem;
+  transition: background-color var(--transition-base);
+}
+
+.app-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.25rem;
+  color: var(--text-primary) !important;
+}
+
+.app-brand-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-md);
+  background: var(--gradient-sky);
+  color: #fff;
+  font-size: 1.05rem;
+  box-shadow: var(--shadow-glow-primary);
+}
+
+.navbar-nav .nav-link {
+  font-weight: 600;
+  color: var(--text-secondary);
+  padding: .5rem .9rem;
+  border-radius: var(--radius-pill);
+  transition: all var(--transition-fast);
+}
+
+.navbar-nav .nav-link:hover {
+  color: var(--color-primary);
+  background: rgba(79, 107, 251, 0.08);
+}
+
+.navbar-nav .nav-link.active {
+  color: #fff;
+  background: var(--gradient-sky);
+  box-shadow: var(--shadow-glow-primary);
+}
+
+.btn-theme-toggle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+}
+.btn-theme-toggle:hover {
+  color: var(--color-primary);
+  transform: rotate(20deg);
+}
+
+/* ---------- Page shell ---------- */
+.page-main {
+  min-height: calc(100vh - 250px);
+  padding-top: clamp(1.25rem, 3vw, 2.5rem);
+  padding-bottom: clamp(2rem, 4vw, 3rem);
+}
+
+/* ---------- Dashboard grid ---------- */
+.dashboard-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+@media (min-width: 992px) {
+  .dashboard-grid {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+  .dashboard-main-col {
+    flex: 1 1 66%;
+    min-width: 0; /* prevents flex overflow that would cause horizontal scroll */
+  }
+  .dashboard-side-col {
+    flex: 1 1 34%;
+    min-width: 0;
+    position: sticky;
+    top: 92px;
+  }
+}
+
+.dashboard-main-col,
+.dashboard-side-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  min-width: 0;
+}
+
+/* ---------- Footer ---------- */
+.app-footer {
+  background: var(--bg-surface);
+  border-top: 1px solid var(--border-subtle);
+  padding: clamp(2rem, 5vw, 3.5rem) 0 1.5rem;
+  margin-top: clamp(3rem, 6vw, 5rem);
+}
+
+.app-brand-footer { margin-bottom: .5rem; }
+
+.footer-tagline {
+  color: var(--text-muted);
+  max-width: 32ch;
+  margin-top: .75rem;
+}
+
+.footer-heading {
+  font-size: .8rem;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--text-muted);
+  margin-bottom: .9rem;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: .55rem;
+}
+.footer-links a {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+.footer-links a:hover { color: var(--color-primary); }
+
+.footer-divider {
+  border-color: var(--border-subtle);
+  margin: 1.75rem 0 1.25rem;
+}
+
+.footer-copyright {
+  color: var(--text-muted);
+  font-size: .875rem;
+  margin: 0;
+}
+
+/* ---------- Section heading pattern used across pages ---------- */
+.section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.1rem;
+  flex-wrap: wrap;
+}
+
+.section-heading h2,
+.section-heading h5 {
+  margin: 0;
+  font-weight: 700;
+}
+
+.section-eyebrow {
+  font-size: .75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--color-primary);
+}

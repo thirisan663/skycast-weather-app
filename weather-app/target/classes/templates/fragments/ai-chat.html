@@ -1,0 +1,38 @@
+<!-- ============================================================
+     AI CHAT FRAGMENT
+     Reused on the dashboard side panel and the dedicated /assistant
+     page. Suggested-question chips fire sendMessage() in ai-assistant.js.
+     ============================================================ -->
+<div th:fragment="aiChat" class="glass-card ai-panel">
+    <div class="ai-panel-header">
+        <div class="ai-avatar"><i class="bi bi-stars"></i></div>
+        <div>
+            <p class="ai-panel-title">AI Weather Assistant</p>
+            <p class="ai-panel-subtitle">Ask me anything about today's weather</p>
+        </div>
+    </div>
+
+    <div id="aiChatWindow" class="ai-chat-window">
+        <div class="chat-bubble-row assistant">
+            <div class="chat-avatar-mini"><i class="bi bi-stars"></i></div>
+            <div class="chat-bubble">
+                Hi! I'm your AI weather assistant. Search a city and ask me things like
+                <em>"Should I carry an umbrella?"</em> or <em>"What should I wear today?"</em>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex gap-2 flex-wrap mt-2 mb-1">
+        <button type="button" class="ai-suggested-chip" data-question="Will it rain today?">Will it rain today?</button>
+        <button type="button" class="ai-suggested-chip" data-question="Should I carry an umbrella?">Umbrella needed?</button>
+        <button type="button" class="ai-suggested-chip" data-question="What should I wear today?">What to wear?</button>
+        <button type="button" class="ai-suggested-chip" data-question="Is it good weather for outdoor activities?">Good for outdoors?</button>
+    </div>
+
+    <form id="aiChatForm" class="ai-chat-input-row" autocomplete="off">
+        <input type="text" id="aiChatInput" class="form-control" placeholder="Ask about the weather..." aria-label="Ask the AI weather assistant" required>
+        <button type="submit" id="aiSendBtn" class="btn-send" aria-label="Send message">
+            <i class="bi bi-send-fill"></i>
+        </button>
+    </form>
+</div>

@@ -1,0 +1,52 @@
+/* ==========================================================================
+   RESPONSIVE OVERRIDES
+   Bootstrap's grid + utilities (row-cols-*, d-flex, order-*) handle most of
+   the responsive work directly in the templates. This file covers the
+   handful of behaviors that need real CSS: hiding the desktop temp-bar,
+   collapsing the daily-row grid on small screens, and touch target sizing.
+   ========================================================================== */
+
+/* Small screens (<576px): phones */
+@media (max-width: 575.98px) {
+  .hero-temp { font-size: 3.75rem; }
+  .hero-icon-wrap { width: 88px; height: 88px; }
+  .hero-icon-wrap i { font-size: 4.25rem; }
+
+  .daily-row {
+    grid-template-columns: 60px 1fr auto;
+  }
+  .daily-icon-condition span { display: none; } /* icon-only condition on very small screens */
+
+  .search-input-group .form-control {
+    padding-right: 4.7rem;
+    font-size: .92rem;
+  }
+  .search-input-group .btn-search span { display: none; } /* icon-only search button */
+  .search-input-group .btn-search { padding: 0 1rem; }
+
+  /* Ensure all interactive controls stay comfortably tappable */
+  .btn, .form-control, .nav-link, .ai-suggested-chip {
+    min-height: 40px;
+  }
+}
+
+/* Tablet */
+@media (min-width: 576px) and (max-width: 991.98px) {
+  .daily-temp-bar { display: block; }
+}
+
+/* Desktop and up */
+@media (min-width: 992px) {
+  .daily-temp-bar { display: block; }
+}
+
+/* Large desktop: give the temp bar more visual room */
+@media (min-width: 1200px) {
+  .daily-row { grid-template-columns: 84px 1fr auto 160px; }
+}
+
+/* Reduce hero padding/typography a touch on short mobile viewports in landscape */
+@media (max-width: 991.98px) and (orientation: landscape) and (max-height: 480px) {
+  .hero-weather-card { padding: 1.25rem; }
+  .hero-temp { font-size: 2.75rem; }
+}

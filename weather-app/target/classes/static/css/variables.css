@@ -1,0 +1,80 @@
+/* ==========================================================================
+   DESIGN TOKENS
+   Central source of truth for color, spacing, radius, and shadow so every
+   other stylesheet stays declarative. Light/dark themes are just two sets
+   of values swapped via [data-theme="dark"] on <html>.
+   ========================================================================== */
+
+:root {
+  /* Brand gradient - the signature "sky" gradient used across hero + accents */
+  --gradient-sky: linear-gradient(135deg, #4f8dfd 0%, #6a5cf0 50%, #8b5cf6 100%);
+  --gradient-sunrise: linear-gradient(135deg, #ff9a6c 0%, #ff6f91 50%, #a084f0 100%);
+  --gradient-clear-day: linear-gradient(160deg, #56ccf2 0%, #2f80ed 100%);
+  --gradient-night: linear-gradient(160deg, #0f2140 0%, #1b1440 60%, #2d1b4e 100%);
+
+  /* Brand colors */
+  --color-primary: #4f6bfb;
+  --color-primary-dark: #3a4fd6;
+  --color-accent: #8b5cf6;
+  --color-success: #22c55e;
+  --color-warning: #f59e0b;
+  --color-danger: #ef4444;
+  --color-info: #06b6d4;
+
+  /* Neutral surface palette - light theme */
+  --bg-app: #f3f5fb;
+  --bg-surface: #ffffff;
+  --bg-surface-soft: #f8f9fe;
+  --bg-glass: rgba(255, 255, 255, 0.6);
+  --border-subtle: rgba(15, 23, 42, 0.08);
+  --border-strong: rgba(15, 23, 42, 0.14);
+
+  --text-primary: #101425;
+  --text-secondary: #565f7a;
+  --text-muted: #8a91ab;
+  --text-on-gradient: #ffffff;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(20, 24, 55, 0.06);
+  --shadow-md: 0 8px 24px rgba(20, 24, 55, 0.08);
+  --shadow-lg: 0 16px 40px rgba(20, 24, 55, 0.12);
+  --shadow-glow-primary: 0 8px 30px rgba(79, 107, 251, 0.25);
+
+  /* Radius scale */
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 22px;
+  --radius-xl: 28px;
+  --radius-pill: 999px;
+
+  /* Spacing rhythm (used sparingly - Bootstrap utilities cover most cases) */
+  --space-section: clamp(2rem, 5vw, 4rem);
+
+  /* Typography */
+  --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+
+  /* Motion */
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-fast: 150ms var(--ease-standard);
+  --transition-base: 250ms var(--ease-standard);
+  --transition-slow: 450ms var(--ease-standard);
+}
+
+/* Dark theme overrides - toggled via JS (theme.js) setting data-theme on <html> */
+[data-theme="dark"] {
+  --bg-app: #0b0e1a;
+  --bg-surface: #131729;
+  --bg-surface-soft: #171c33;
+  --bg-glass: rgba(23, 27, 48, 0.55);
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.14);
+
+  --text-primary: #f3f5fb;
+  --text-secondary: #b7bdd6;
+  --text-muted: #7c84a6;
+
+  --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 10px 28px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 20px 48px rgba(0, 0, 0, 0.45);
+}
